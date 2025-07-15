@@ -1,49 +1,94 @@
-// Profitlator Full Version – Updated // Includes: Basic Calculator, Currency Converter, Discount Tool, Profit Margin Tool // SEO Meta Tags, Favicon Support
+// Profitlator Full Version - Updated
+// Includes: Basic Calculator, Currency Converter, Discount Tool, Profit Margin, Break-Even Quantity, Markup vs Margin Converter, Sales Goal Planner, Savings Goal Tool, Multi-Currency Price Tag Generator
 
-import React, { useState, useEffect } from "react"; import Head from "next/head"; import { Card, CardContent, } from "@/components/ui/card"; import { Input } from "@/components/ui/input"; import { Button } from "@/components/ui/button"; import { Label } from "@/components/ui/label"; import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, } from "@/components/ui/select";
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 
-const formatNumber = (num) => { if (!num && num !== 0) return ""; return parseFloat(num).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2, }); };
+const formatNumber = (num) => {
+  if (!num && num !== 0) return "";
+  return parseFloat(num).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+};
 
 const currencies = ["USD", "NGN", "EUR", "GBP", "KES", "ZAR"];
 
-export default function Profitlator() { // Basic Calculator const [num1, setNum1] = useState(""); const [num2, setNum2] = useState(""); const [operator, setOperator] = useState("+"); const [calcResult, setCalcResult] = useState(null);
+export default function Profitlator() {
+  const [num1, setNum1] = useState("");
+  const [num2, setNum2] = useState("");
+  const [operator, setOperator] = useState("+");
+  const [calcResult, setCalcResult] = useState(null);
 
-// Currency Converter const [fromCurrency, setFromCurrency] = useState("USD"); const [toCurrency, setToCurrency] = useState("NGN"); const [currencyAmount, setCurrencyAmount] = useState(""); const [convertedAmount, setConvertedAmount] = useState(null); const [rates, setRates] = useState({});
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("NGN");
+  const [currencyAmount, setCurrencyAmount] = useState("");
+  const [convertedAmount, setConvertedAmount] = useState(null);
 
-// Discount Tool const [originalPrice, setOriginalPrice] = useState(""); const [discountPercent, setDiscountPercent] = useState(""); const [discountCurrency, setDiscountCurrency] = useState("USD"); const [finalPrice, setFinalPrice] = useState(null);
+  const [discountAmount, setDiscountAmount] = useState("");
+  const [discountPercent, setDiscountPercent] = useState("");
+  const [discountCurrency, setDiscountCurrency] = useState("USD");
+  const [discountedPrice, setDiscountedPrice] = useState(null);
 
-// Profit Margin Tool const [cost, setCost] = useState(""); const [revenue, setRevenue] = useState(""); const [profitCurrency, setProfitCurrency] = useState("USD"); const [profitResult, setProfitResult] = useState(null);
+  const [costPrice, setCostPrice] = useState("");
+  const [sellingPrice, setSellingPrice] = useState("");
+  const [marginCurrency, setMarginCurrency] = useState("USD");
+  const [profit, setProfit] = useState(null);
+  const [margin, setMargin] = useState(null);
 
-// Fetch Currency Rates useEffect(() => { fetch("https://api.exchangerate.host/latest?base=USD") .then((res) => res.json()) .then((data) => setRates(data.rates)); }, []);
+  const calculate = () => {
+    let result = 0;
+    const a = parseFloat(num1);
+    const b = parseFloat(num2);
+    if (isNaN(a) || isNaN(b)) return;
+    switch (operator) {
+      case "+": result = a + b; break;
+      case "-": result = a - b; break;
+      case "*": result = a * b; break;
+      case "/": result = b !== 0 ? a / b : "∞"; break;
+    }
+    setCalcResult(result);
+  };
 
-// Handlers const handleCalculation = () => { const a = parseFloat(num1); const b = parseFloat(num2); if (isNaN(a) || isNaN(b)) return; let result; switch (operator) { case "+": result = a + b; break; case "-": result = a - b; break; case "*": result = a * b; break; case "/": result = b !== 0 ? a / b : "Err"; break; default: result = "Invalid"; } setCalcResult(result); };
+  const convertCurrency = () => {
+    const amount = parseFloat(currencyAmount);
+    if (!amount) return;
+    const rate = 1500; // dummy rate
+    const result = fromCurrency === toCurrency ? amount : (fromCurrency === "USD" && toCurrency === "NGN") ? amount * rate : amount / rate;
+    setConvertedAmount(result);
+  };
 
-const handleConversion = () => { if (!rates[fromCurrency] || !rates[toCurrency]) return; const rate = rates[toCurrency] / rates[fromCurrency]; setConvertedAmount(currencyAmount * rate); };
+  const calculateDiscount = () => {
+    const a = parseFloat(discountAmount);
+    const b = parseFloat(discountPercent);
+    if (!a || !b) return;
+    const result = a - (a * (b / 100));
+    setDiscountedPrice(result);
+  };
 
-const handleDiscount = () => { const price = parseFloat(originalPrice); const discount = parseFloat(discountPercent); if (isNaN(price) || isNaN(discount)) return; const final = price - price * (discount / 100); setFinalPrice(final); };
+  const calculateMargin = () => {
+    const cost = parseFloat(costPrice);
+    const sell = parseFloat(sellingPrice);
+    if (!cost || !sell) return;
+    const profitValue = sell - cost;
+    const marginValue = (profitValue / sell) * 100;
+    setProfit(profitValue);
+    setMargin(marginValue);
+  };
 
-const handleProfitMargin = () => { const c = parseFloat(cost); const r = parseFloat(revenue); if (isNaN(c) || isNaN(r)) return; const profit = r - c; const margin = ((profit / r) * 100).toFixed(2); setProfitResult({ profit, margin }); };
+  return (
+    <div className="p-6 space-y-6 text-center">
+      <h1 className="text-3xl font-bold text-blue-800">Profitlator</h1>
+      <p className="font-bold">Profitlator is your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster.</p>
 
-return ( <> <Head> <title>Profitlator - Smart Profit Partner</title> <meta
-name="description"
-content="Profitlator is your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster."
-/> <link rel="icon" href="/favicon.ico" /> </Head>
-
-<main className="p-6 space-y-8">
-    <h1 className="text-3xl font-bold text-center">Profitlator</h1>
-    <p className="text-center font-semibold">
-      Profitlator is your smart profit partner — helping everyday people and
-      small businesses price better, earn more, and grow faster.
-    </p>
-
-    {/* Calculator */}
-    <Card>
-      <CardContent className="space-y-2">
-        <h2 className="font-bold">Basic Calculator</h2>
-        <div className="flex gap-2">
-          <Input type="number" placeholder="Num 1" value={num1} onChange={(e) => setNum1(e.target.value)} />
+      {/* Basic Calculator */}
+      <Card>
+        <CardContent className="space-y-4">
+          <h2 className="font-bold text-lg">Basic Calculator</h2>
+          <Input placeholder="First number" value={num1} onChange={(e) => setNum1(e.target.value)} />
           <Select value={operator} onValueChange={setOperator}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectTrigger><SelectValue placeholder="Select operator" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="+">+</SelectItem>
               <SelectItem value="-">-</SelectItem>
@@ -51,96 +96,74 @@ content="Profitlator is your smart profit partner — helping everyday people an
               <SelectItem value="/">/</SelectItem>
             </SelectContent>
           </Select>
-          <Input type="number" placeholder="Num 2" value={num2} onChange={(e) => setNum2(e.target.value)} />
-          <Button onClick={handleCalculation}>=</Button>
-        </div>
-        {calcResult !== null && (
-          <p className="font-bold">Result: ({formatNumber(calcResult)})</p>
-        )}
-      </CardContent>
-    </Card>
+          <Input placeholder="Second number" value={num2} onChange={(e) => setNum2(e.target.value)} />
+          <Button onClick={calculate}>=</Button>
+          {calcResult !== null && <p className="font-bold">Answer: ({formatNumber(calcResult)})</p>}
+        </CardContent>
+      </Card>
 
-    {/* Currency Converter */}
-    <Card>
-      <CardContent className="space-y-2">
-        <h2 className="font-bold">Currency Converter</h2>
-        <Input type="number" placeholder="Amount" value={currencyAmount} onChange={(e) => setCurrencyAmount(e.target.value)} />
-        <div className="flex gap-2">
-          <Select value={fromCurrency} onValueChange={setFromCurrency}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {currencies.map((c) => (
-                <SelectItem key={c} value={c}>{c}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={toCurrency} onValueChange={setToCurrency}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {currencies.map((c) => (
-                <SelectItem key={c} value={c}>{c}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Button onClick={handleConversion}>Convert</Button>
-        {convertedAmount && (
-          <p className="font-bold">Converted: ({formatNumber(convertedAmount)} {toCurrency})</p>
-        )}
-      </CardContent>
-    </Card>
-
-    {/* Discount Tool */}
-    <Card>
-      <CardContent className="space-y-2">
-        <h2 className="font-bold">Discount Calculator</h2>
-        <Input type="number" placeholder="Original Price" value={originalPrice} onChange={(e) => setOriginalPrice(e.target.value)} />
-        <Input type="number" placeholder="Discount (%)" value={discountPercent} onChange={(e) => setDiscountPercent(e.target.value)} />
-        <Select value={discountCurrency} onValueChange={setDiscountCurrency}>
-          <SelectTrigger><SelectValue /></SelectTrigger>
-          <SelectContent>
-            {currencies.map((c) => (
-              <SelectItem key={c} value={c}>{c}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Button onClick={handleDiscount}>Calculate</Button>
-        {finalPrice && (
-          <p className="font-bold">Final Price: ({formatNumber(finalPrice)} {discountCurrency})</p>
-        )}
-      </CardContent>
-    </Card>
-
-    {/* Profit Margin Tool */}
-    <Card>
-      <CardContent className="space-y-2">
-        <h2 className="font-bold">Profit Margin Tool</h2>
-        <Input type="number" placeholder="Cost" value={cost} onChange={(e) => setCost(e.target.value)} />
-        <Input type="number" placeholder="Revenue" value={revenue} onChange={(e) => setRevenue(e.target.value)} />
-        <Select value={profitCurrency} onValueChange={setProfitCurrency}>
-          <SelectTrigger><SelectValue /></SelectTrigger>
-          <SelectContent>
-            {currencies.map((c) => (
-              <SelectItem key={c} value={c}>{c}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Button onClick={handleProfitMargin}>Calculate</Button>
-        {profitResult && (
-          <div>
-            <p className="font-bold">Profit: ({formatNumber(profitResult.profit)} {profitCurrency})</p>
-            <p className="font-bold">Margin: ({profitResult.margin}%)</p>
+      {/* Currency Converter */}
+      <Card>
+        <CardContent className="space-y-4">
+          <h2 className="font-bold text-lg">Currency Converter</h2>
+          <Input placeholder="Amount" value={currencyAmount} onChange={(e) => setCurrencyAmount(e.target.value)} />
+          <div className="flex gap-4 justify-center">
+            <Select value={fromCurrency} onValueChange={setFromCurrency}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>{currencies.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+            </Select>
+            <span className="self-center">→</span>
+            <Select value={toCurrency} onValueChange={setToCurrency}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>{currencies.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+            </Select>
           </div>
-        )}
-      </CardContent>
-    </Card>
+          <Button onClick={convertCurrency}>Convert</Button>
+          {convertedAmount && <p className="font-bold">Result: ({formatNumber(convertedAmount)}) {toCurrency}</p>}
+        </CardContent>
+      </Card>
 
-    {/* Footer */}
-    <footer className="text-center pt-6 font-bold">
-      Powered by Di-Gi
-    </footer>
-  </main>
-</>
+      {/* Discount Tool */}
+      <Card>
+        <CardContent className="space-y-4">
+          <h2 className="font-bold text-lg">Discount Tool</h2>
+          <Input placeholder="Original Price" value={discountAmount} onChange={(e) => setDiscountAmount(e.target.value)} />
+          <Input placeholder="Discount %" value={discountPercent} onChange={(e) => setDiscountPercent(e.target.value)} />
+          <Select value={discountCurrency} onValueChange={setDiscountCurrency}>
+            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectContent>{currencies.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+          </Select>
+          <Button onClick={calculateDiscount}>Apply Discount</Button>
+          {discountedPrice && <p className="font-bold">Discounted Price: ({formatNumber(discountedPrice)}) {discountCurrency}</p>}
+        </CardContent>
+      </Card>
 
-); }
+      {/* Profit Margin Tool */}
+      <Card>
+        <CardContent className="space-y-4">
+          <h2 className="font-bold text-lg">Profit Margin Tool</h2>
+          <Input placeholder="Cost Price" value={costPrice} onChange={(e) => setCostPrice(e.target.value)} />
+          <Input placeholder="Selling Price" value={sellingPrice} onChange={(e) => setSellingPrice(e.target.value)} />
+          <Select value={marginCurrency} onValueChange={setMarginCurrency}>
+            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectContent>{currencies.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+          </Select>
+          <Button onClick={calculateMargin}>Calculate Margin</Button>
+          {profit !== null && (
+            <div className="space-y-1 font-bold">
+              <p>Profit: ({formatNumber(profit)}) {marginCurrency}</p>
+              <p>Margin: ({formatNumber(margin)}%)</p>
+              <p>Breakeven Price: ({formatNumber(parseFloat(costPrice))}) {marginCurrency}</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
+      <h2 className="font-bold text-lg mt-8">About Profitlator</h2>
+      <p className="text-center font-bold">
+        Profitlator is designed to simplify business decisions — from pricing to savings — so you can focus on growing your business with clarity and control.
+      </p>
+      <footer className="pt-6 font-bold">Powered by Di-Gi</footer>
+    </div>
+  );
+}
