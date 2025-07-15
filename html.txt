@@ -1,0 +1,40 @@
+<!-- PROFITLATOR - Smart Profit Calculator --><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profitlator | Powered by Di‑gi</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <div class="min-h-screen flex flex-col items-center justify-center px-4">
+    <h1 class="text-3xl font-bold mb-4 text-green-700">Profitlator</h1>
+    <p class="mb-8 text-center max-w-lg text-sm">Your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster. <br><span class="italic text-gray-600">Powered by Di‑gi</span></p><div class="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
+  <label class="block mb-2 font-semibold">Cost Price (₦):</label>
+  <input id="costPrice" type="number" class="w-full mb-4 px-4 py-2 border rounded-lg" placeholder="e.g. 1000" />
+
+  <label class="block mb-2 font-semibold">Selling Price (₦):</label>
+  <input id="sellingPrice" type="number" class="w-full mb-4 px-4 py-2 border rounded-lg" placeholder="e.g. 1500" />
+
+  <button onclick="calculateProfit()" class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">Calculate Profit</button>
+
+  <div id="result" class="mt-6 text-center font-semibold"></div>
+</div>
+
+  </div>  <script>
+    function calculateProfit() {
+      const cost = parseFloat(document.getElementById("costPrice").value);
+      const sell = parseFloat(document.getElementById("sellingPrice").value);
+      const resultDiv = document.getElementById("result");
+
+      if (isNaN(cost) || isNaN(sell)) {
+        resultDiv.innerHTML = "❌ Please enter valid numbers.";
+        return;
+      }
+
+      const profit = sell - cost;
+      const margin = ((profit / cost) * 100).toFixed(2);
+
+      resultDiv.innerHTML = `✅ Profit: ₦${profit.toLocaleString()} <br />💹 Profit Margin: ${margin}%`;
+    }
+  </script></body>
+</html>
