@@ -71,8 +71,9 @@
     button:hover {
       background: #0056b3;
     }
-    #result, #convertedCurrency, #discountResult, #profitResult {
+    #result, #convertedCurrency, #discountResult, #profitResult, #markupResult, #breakevenResult {
       font-weight: bold;
+      font-size: 1.2rem;
     }
     footer {
       text-align: center;
@@ -89,14 +90,16 @@
   </header>  <main>
     <div class="section">
       <h3>🧮 Basic Calculator</h3>
-      <input type="text" id="calcInput" placeholder="Enter calculation (e.g. 100+20/2)" />
-      <div>
-        <button onclick="appendCalc('+')">+</button>
-        <button onclick="appendCalc('-')">−</button>
-        <button onclick="appendCalc('*')">×</button>
-        <button onclick="appendCalc('/')">÷</button>
-        <button onclick="runCalculation()">=</button>
-      </div>
+      <input type="text" id="calcInput" placeholder="Enter value (e.g. 100)" />
+      <label>Choose Operator:</label>
+      <select id="operator">
+        <option value="+">+</option>
+        <option value="-">−</option>
+        <option value="*">×</option>
+        <option value="/">÷</option>
+      </select>
+      <input type="text" id="calcInput2" placeholder="Enter second value" />
+      <button onclick="runCalculation()">=</button>
       <p id="result"></p>
     </div><div class="section">
   <h3>💱 Currency Converter</h3>
@@ -145,6 +148,8 @@
   </select>
   <button onclick="calculateProfit()">Calculate Profit</button>
   <p id="profitResult"></p>
+  <p id="markupResult"></p>
+  <p id="breakevenResult"></p>
 </div>
 
 <div class="section">
@@ -157,16 +162,21 @@
   </main>  <footer>
     Powered by <strong>Di‑gi</strong>
   </footer>  <script>
-    function appendCalc(char) {
-      document.getElementById("calcInput").value += char;
-    }
     function runCalculation() {
-      const input = document.getElementById("calcInput").value;
+      const val1 = parseFloat(document.getElementById("calcInput").value);
+      const val2 = parseFloat(document.getElementById("calcInput2").value);
+      const operator = document.getElementById("operator").value;
       try {
-        const result = eval(input);
-        document.getElementById("result").innerText = "Result: " + result;
+        let result;
+        switch (operator) {
+          case "+": result = val1 + val2; break;
+          case "-": result = val1 - val2; break;
+          case "*": result = val1 * val2; break;
+          case "/": result = val1 / val2; break;
+        }
+        document.getElementById("result").innerText = `(${result.toFixed(2)})`;
       } catch {
-        document.getElementById("result").innerText = "Invalid expression.";
+        document.getElementById("result").innerText = "(Invalid expression)";
       }
     }
 
@@ -181,8 +191,7 @@
         GBP: { USD: 1.25, NGN: 1800, EUR: 1.17 },
       };
       const converted = amount * rates[from][to];
-      document.getElementById("convertedCurrency").innerText =
-        `Converted: ${to} ${converted.toFixed(2)}`;
+      document.getElementById("convertedCurrency").innerText = `(${to} ${converted.toFixed(2)})`;
     }
 
     function calculateDiscount() {
@@ -191,10 +200,9 @@
       const symbol = document.getElementById("discountCurrency").value;
       if (!isNaN(price) && !isNaN(rate)) {
         const final = price - (price * rate / 100);
-        document.getElementById("discountResult").innerText =
-          `Final Price: ${symbol}${final.toFixed(2)}`;
+        document.getElementById("discountResult").innerText = `(${symbol}${final.toFixed(2)})`;
       } else {
-        document.getElementById("discountResult").innerText = "Enter valid values.";
+        document.getElementById("discountResult").innerText = "(Enter valid values)";
       }
     }
 
@@ -205,10 +213,13 @@
       if (!isNaN(cost) && !isNaN(sell)) {
         const profit = sell - cost;
         const margin = ((profit / cost) * 100).toFixed(2);
-        document.getElementById("profitResult").innerText =
-          `Profit: ${symbol}${profit.toFixed(2)} | Margin: ${margin}%`;
+        const markup = ((profit / cost) * 100).toFixed(2);
+        const breakeven = cost.toFixed(2);
+        document.getElementById("profitResult").innerText = `(${symbol}${profit.toFixed(2)} profit | ${margin}% margin)`;
+        document.getElementById("markupResult").innerText = `(Markup: ${markup}%)`;
+        document.getElementById("breakevenResult").innerText = `(Breakeven Price: ${symbol}${breakeven})`;
       } else {
-        document.getElementById("profitResult").innerText = "Invalid input.";
+        document.getElementById("profitResult").innerText = "(Invalid input)";
       }
     }
   </script></body>
