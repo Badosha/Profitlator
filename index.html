@@ -1,154 +1,215 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Profitlator is your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster."/>
-  <meta name="keywords" content="profit calculator, currency converter, discount tool, business pricing tool, Profitlator, Di‑gi"/>
-  <meta name="author" content="Powered by Di‑gi"/>
-  <title>Profitlator | Global Online Profit Calculator – Powered by Di‑gi</title>
-  <link rel="icon" type="image/png" href="https://img.icons8.com/emoji/48/money-bag-emoji.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Profitlator is your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster." />
+  <meta name="keywords" content="profit calculator, currency converter, discount tool, business pricing tool, small business calculator, Profitlator, Di-gi" />
+  <meta name="author" content="Powered by Di-gi" />
+  <meta property="og:title" content="Profitlator – Smart Profit Calculator for Businesses" />
+  <meta property="og:description" content="Price smarter, earn more, and grow faster with Profitlator — your global business calculator." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://badosha.github.io/Profitlator/" />
+  <meta property="og:image" content="https://img.icons8.com/emoji/48/money-bag-emoji.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Profitlator by Di-gi" />
+  <meta name="twitter:description" content="Global tool for smarter pricing, discount calculation, and currency conversion." />
+  <title>Profitlator | Smart Profit Calculator – Powered by Di-gi</title>
+  <link rel="icon" type="image/png" href="https://img.icons8.com/emoji/48/money-bag-emoji.png" />
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 1rem;
-      background-color: #f8f9fa;
+      padding: 0;
+      background-color: #f4f7fa;
       color: #222;
-      text-align: center;
+      line-height: 1.6;
     }
-    h1 {
-      margin-top: 0;
+    header {
+      background: linear-gradient(to right, #0066cc, #00cc99);
+      padding: 1.2rem;
+      text-align: center;
+      color: white;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      font-weight: bold;
+    }
+    main {
+      padding: 1rem;
+      max-width: 800px;
+      margin: auto;
     }
     .section {
-      margin: 1.5rem auto;
-      max-width: 500px;
-      padding: 1rem;
       background: white;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .section h3 {
+      margin-top: 0;
+      font-weight: bold;
+      color: #007bff;
     }
     input, select, button {
-      padding: 0.5rem;
-      margin: 0.3rem;
-      width: 80%;
-      border-radius: 6px;
+      display: block;
+      width: 95%;
+      padding: 0.6rem;
+      margin: 0.5rem auto;
       border: 1px solid #ccc;
+      border-radius: 5px;
       font-size: 1rem;
     }
     button {
       background: #007bff;
       color: white;
-      border: none;
+      font-weight: bold;
       cursor: pointer;
+      transition: background 0.2s;
     }
     button:hover {
       background: #0056b3;
     }
-    .footer {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #555;
+    #result, #convertedCurrency, #discountResult, #profitResult {
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-weight: bold;
+      background-color: #e9ecef;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Profitlator</h1>
+    <p><strong>Your smart profit partner — helping you price better, earn more, and grow faster.</strong></p>
+  </header>  <main>
+    <div class="section">
+      <h3>🧮 Basic Calculator</h3>
+      <input type="text" id="calcInput" placeholder="Enter calculation (e.g. 100+20/2)" />
+      <div>
+        <button onclick="appendCalc('+')">+</button>
+        <button onclick="appendCalc('-')">−</button>
+        <button onclick="appendCalc('*')">×</button>
+        <button onclick="appendCalc('/')">÷</button>
+        <button onclick="runCalculation()">=</button>
+      </div>
+      <p id="result"></p>
+    </div><div class="section">
+  <h3>💱 Currency Converter</h3>
+  <input type="number" id="currencyAmount" placeholder="Enter amount" />
+  <label>From:</label>
+  <select id="fromCurrency">
+    <option value="USD">USD ($)</option>
+    <option value="NGN">NGN (₦)</option>
+    <option value="EUR">EUR (€)</option>
+    <option value="GBP">GBP (£)</option>
+  </select>
+  <label>To:</label>
+  <select id="toCurrency">
+    <option value="NGN">NGN (₦)</option>
+    <option value="USD">USD ($)</option>
+    <option value="EUR">EUR (€)</option>
+    <option value="GBP">GBP (£)</option>
+  </select>
+  <button onclick="convertCurrency()">Convert</button>
+  <p id="convertedCurrency"></p>
+</div>
 
-  <h1>Profitlator</h1>
-  <p><strong>Your smart profit partner — helping you price better, earn more, and grow faster.</strong></p>
+<div class="section">
+  <h3>🎯 Discount Calculator</h3>
+  <input type="number" id="discountPrice" placeholder="Original price" />
+  <input type="number" id="discountRate" placeholder="Discount %" />
+  <select id="discountCurrency">
+    <option value="₦">₦</option>
+    <option value="$">$</option>
+    <option value="€">€</option>
+    <option value="£">£</option>
+  </select>
+  <button onclick="calculateDiscount()">Get Final Price</button>
+  <p id="discountResult"></p>
+</div>
 
-  <div class="section">
-    <h3>🧮 Basic Calculator</h3>
-    <input type="text" id="calcInput" placeholder="Enter calculation (e.g. 100+20/2)">
-    <button onclick="runCalculation()">=</button>
-    <p id="calcResult"></p>
-  </div>
+<div class="section">
+  <h3>📊 Profit Margin Tool</h3>
+  <input type="number" id="costPrice" placeholder="Cost Price" />
+  <input type="number" id="sellingPrice" placeholder="Selling Price" />
+  <select id="profitCurrency">
+    <option value="₦">₦</option>
+    <option value="$">$</option>
+    <option value="€">€</option>
+    <option value="£">£</option>
+  </select>
+  <button onclick="calculateProfit()">Calculate Profit</button>
+  <p id="profitResult"></p>
+</div>
 
-  <div class="section">
-    <h3>💱 Currency Converter</h3>
-    <input type="number" id="currencyAmount" placeholder="Enter amount" />
-    <select id="currencySelect">
-      <option value="$">USD ($)</option>
-      <option value="₦">NGN (₦)</option>
-      <option value="€">EUR (€)</option>
-      <option value="£">GBP (£)</option>
-      <option value="₹">INR (₹)</option>
-    </select>
-    <p id="convertedCurrency"></p>
-  </div>
+<div class="section">
+  <h3>💡 About Profitlator</h3>
+  <p>
+    Profitlator is a smart, global business tool designed to help entrepreneurs, creators, and small businesses thrive. Whether you're pricing a service, converting currencies, offering a discount, or calculating profits — Profitlator gives you clarity, fast.
+  </p>
+</div>
 
-  <div class="section">
-    <h3>🎯 Discount Calculator</h3>
-    <input type="number" id="discountPrice" placeholder="Original price" />
-    <input type="number" id="discountRate" placeholder="Discount %" />
-    <button onclick="calculateDiscount()">Get Final Price</button>
-    <p id="discountResult"></p>
-  </div>
-
-  <div class="section">
-    <h3>📊 Profit Margin Tool (For Businesses)</h3>
-    <input type="number" id="costPrice" placeholder="Cost Price" />
-    <input type="number" id="sellingPrice" placeholder="Selling Price" />
-    <button onclick="calculateProfit()">Calculate Profit</button>
-    <p id="profitResult"></p>
-  </div>
-
-  <div class="section" id="about">
-    <h3>💡 About Profitlator</h3>
-    <p>
-      Profitlator is a smart digital calculator designed for everyday people and small businesses.
-      It helps you calculate smarter prices, apply discounts, convert currencies, and track your profits with ease.  
-      Whether you sell online or run a small business — this tool saves time, builds clarity, and helps you grow.
-    </p>
-  </div>
-
-  <div class="footer">
-    <p>Powered by <strong>Di‑gi</strong></p>
-  </div>
-
-  <script>
+  </main>  <footer>
+    Powered by <strong>Di‑gi</strong>
+  </footer>  <script>
+    function appendCalc(char) {
+      document.getElementById("calcInput").value += char;
+    }
     function runCalculation() {
       const input = document.getElementById("calcInput").value;
       try {
         const result = eval(input);
-        document.getElementById("calcResult").innerText = "Result: " + result;
+        document.getElementById("result").innerText = "Result: " + result;
       } catch {
-        document.getElementById("calcResult").innerText = "Invalid expression.";
+        document.getElementById("result").innerText = "Invalid expression.";
       }
     }
 
-    document.getElementById("currencySelect").addEventListener("change", function () {
-      const symbol = this.value;
-      const amount = document.getElementById("currencyAmount").value;
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById("currencyAmount").value);
+      const from = document.getElementById("fromCurrency").value;
+      const to = document.getElementById("toCurrency").value;
+      const rates = {
+        USD: { NGN: 1500, EUR: 0.9, GBP: 0.8 },
+        NGN: { USD: 1 / 1500, EUR: 1 / 1700, GBP: 1 / 1800 },
+        EUR: { USD: 1.1, NGN: 1700, GBP: 0.85 },
+        GBP: { USD: 1.25, NGN: 1800, EUR: 1.17 },
+      };
+      const converted = amount * rates[from][to];
       document.getElementById("convertedCurrency").innerText =
-        amount ? `Converted: ${symbol}${amount}` : "";
-    });
+        `Converted: ${to} ${converted.toFixed(2)}`;
+    }
 
     function calculateDiscount() {
       const price = parseFloat(document.getElementById("discountPrice").value);
       const rate = parseFloat(document.getElementById("discountRate").value);
+      const symbol = document.getElementById("discountCurrency").value;
       if (!isNaN(price) && !isNaN(rate)) {
-        const finalPrice = price - (price * rate / 100);
+        const final = price - (price * rate / 100);
         document.getElementById("discountResult").innerText =
-          `Final Price: ${finalPrice.toFixed(2)}`;
+          `Final Price: ${symbol}${final.toFixed(2)}`;
       } else {
-        document.getElementById("discountResult").innerText = "Enter valid numbers.";
+        document.getElementById("discountResult").innerText = "Enter valid values.";
       }
     }
 
     function calculateProfit() {
       const cost = parseFloat(document.getElementById("costPrice").value);
       const sell = parseFloat(document.getElementById("sellingPrice").value);
+      const symbol = document.getElementById("profitCurrency").value;
       if (!isNaN(cost) && !isNaN(sell)) {
         const profit = sell - cost;
         const margin = ((profit / cost) * 100).toFixed(2);
         document.getElementById("profitResult").innerText =
-          `Profit: ${profit.toFixed(2)} | Margin: ${margin}%`;
+          `Profit: ${symbol}${profit.toFixed(2)} | Margin: ${margin}%`;
       } else {
-        document.getElementById("profitResult").innerText = "Enter valid numbers.";
+        document.getElementById("profitResult").innerText = "Invalid input.";
       }
     }
-  </script>
-
-</body>
+  </script></body>
 </html>
