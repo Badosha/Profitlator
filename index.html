@@ -1,40 +1,154 @@
-<!-- PROFITLATOR - Smart Profit Calculator --><!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profitlator | Powered by Di‑gi</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Profitlator is your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster."/>
+  <meta name="keywords" content="profit calculator, currency converter, discount tool, business pricing tool, Profitlator, Di‑gi"/>
+  <meta name="author" content="Powered by Di‑gi"/>
+  <title>Profitlator | Global Online Profit Calculator – Powered by Di‑gi</title>
+  <link rel="icon" type="image/png" href="https://img.icons8.com/emoji/48/money-bag-emoji.png"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background-color: #f8f9fa;
+      color: #222;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .section {
+      margin: 1.5rem auto;
+      max-width: 500px;
+      padding: 1rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    input, select, button {
+      padding: 0.5rem;
+      margin: 0.3rem;
+      width: 80%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
-  <div class="min-h-screen flex flex-col items-center justify-center px-4">
-    <h1 class="text-3xl font-bold mb-4 text-green-700">Profitlator</h1>
-    <p class="mb-8 text-center max-w-lg text-sm">Your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster. <br><span class="italic text-gray-600">Powered by Di‑gi</span></p><div class="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
-  <label class="block mb-2 font-semibold">Cost Price (₦):</label>
-  <input id="costPrice" type="number" class="w-full mb-4 px-4 py-2 border rounded-lg" placeholder="e.g. 1000" />
+<body>
 
-  <label class="block mb-2 font-semibold">Selling Price (₦):</label>
-  <input id="sellingPrice" type="number" class="w-full mb-4 px-4 py-2 border rounded-lg" placeholder="e.g. 1500" />
+  <h1>Profitlator</h1>
+  <p><strong>Your smart profit partner — helping you price better, earn more, and grow faster.</strong></p>
 
-  <button onclick="calculateProfit()" class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700 transition">Calculate Profit</button>
+  <div class="section">
+    <h3>🧮 Basic Calculator</h3>
+    <input type="text" id="calcInput" placeholder="Enter calculation (e.g. 100+20/2)">
+    <button onclick="runCalculation()">=</button>
+    <p id="calcResult"></p>
+  </div>
 
-  <div id="result" class="mt-6 text-center font-semibold"></div>
-</div>
+  <div class="section">
+    <h3>💱 Currency Converter</h3>
+    <input type="number" id="currencyAmount" placeholder="Enter amount" />
+    <select id="currencySelect">
+      <option value="$">USD ($)</option>
+      <option value="₦">NGN (₦)</option>
+      <option value="€">EUR (€)</option>
+      <option value="£">GBP (£)</option>
+      <option value="₹">INR (₹)</option>
+    </select>
+    <p id="convertedCurrency"></p>
+  </div>
 
-  </div>  <script>
+  <div class="section">
+    <h3>🎯 Discount Calculator</h3>
+    <input type="number" id="discountPrice" placeholder="Original price" />
+    <input type="number" id="discountRate" placeholder="Discount %" />
+    <button onclick="calculateDiscount()">Get Final Price</button>
+    <p id="discountResult"></p>
+  </div>
+
+  <div class="section">
+    <h3>📊 Profit Margin Tool (For Businesses)</h3>
+    <input type="number" id="costPrice" placeholder="Cost Price" />
+    <input type="number" id="sellingPrice" placeholder="Selling Price" />
+    <button onclick="calculateProfit()">Calculate Profit</button>
+    <p id="profitResult"></p>
+  </div>
+
+  <div class="section" id="about">
+    <h3>💡 About Profitlator</h3>
+    <p>
+      Profitlator is a smart digital calculator designed for everyday people and small businesses.
+      It helps you calculate smarter prices, apply discounts, convert currencies, and track your profits with ease.  
+      Whether you sell online or run a small business — this tool saves time, builds clarity, and helps you grow.
+    </p>
+  </div>
+
+  <div class="footer">
+    <p>Powered by <strong>Di‑gi</strong></p>
+  </div>
+
+  <script>
+    function runCalculation() {
+      const input = document.getElementById("calcInput").value;
+      try {
+        const result = eval(input);
+        document.getElementById("calcResult").innerText = "Result: " + result;
+      } catch {
+        document.getElementById("calcResult").innerText = "Invalid expression.";
+      }
+    }
+
+    document.getElementById("currencySelect").addEventListener("change", function () {
+      const symbol = this.value;
+      const amount = document.getElementById("currencyAmount").value;
+      document.getElementById("convertedCurrency").innerText =
+        amount ? `Converted: ${symbol}${amount}` : "";
+    });
+
+    function calculateDiscount() {
+      const price = parseFloat(document.getElementById("discountPrice").value);
+      const rate = parseFloat(document.getElementById("discountRate").value);
+      if (!isNaN(price) && !isNaN(rate)) {
+        const finalPrice = price - (price * rate / 100);
+        document.getElementById("discountResult").innerText =
+          `Final Price: ${finalPrice.toFixed(2)}`;
+      } else {
+        document.getElementById("discountResult").innerText = "Enter valid numbers.";
+      }
+    }
+
     function calculateProfit() {
       const cost = parseFloat(document.getElementById("costPrice").value);
       const sell = parseFloat(document.getElementById("sellingPrice").value);
-      const resultDiv = document.getElementById("result");
-
-      if (isNaN(cost) || isNaN(sell)) {
-        resultDiv.innerHTML = "❌ Please enter valid numbers.";
-        return;
+      if (!isNaN(cost) && !isNaN(sell)) {
+        const profit = sell - cost;
+        const margin = ((profit / cost) * 100).toFixed(2);
+        document.getElementById("profitResult").innerText =
+          `Profit: ${profit.toFixed(2)} | Margin: ${margin}%`;
+      } else {
+        document.getElementById("profitResult").innerText = "Enter valid numbers.";
       }
-
-      const profit = sell - cost;
-      const margin = ((profit / cost) * 100).toFixed(2);
-
-      resultDiv.innerHTML = `✅ Profit: ₦${profit.toLocaleString()} <br />💹 Profit Margin: ${margin}%`;
     }
-  </script></body>
+  </script>
+
+</body>
 </html>
