@@ -1,68 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Use the Profitlator Profit Margin Calculator to instantly calculate your profit, margin and markup.">
-  <meta name="keywords" content="profit margin calculator, small business, pricing tool, profit calculator, earn more">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to calculate profit margin in dollars with real-world examples. Use Profitlator’s smart calculator to price better and grow your business.">
+  <meta name="keywords" content="profit margin, profit calculator, dollar profit, business tools, small business growth">
   <meta name="author" content="Di-Gi">
-  <meta property="og:title" content="Profit Margin Calculator - Profitlator">
-  <meta property="og:description" content="Instantly calculate your profit, margin and markup.">
+  <meta property="og:title" content="How to Calculate Profit Margin (in Dollars) - Profitlator Blog">
+  <meta property="og:description" content="Understand and calculate profit margins using the USD as a base currency. Ideal for online sellers and small businesses.">
   <meta property="og:image" content="https://badosha.github.io/Profitlator/preview.png">
-  <meta property="og:url" content="https://badosha.github.io/Profitlator/profit-margin.html">
+  <meta property="og:url" content="https://badosha.github.io/Profitlator/blog/profit-margin.html">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Profit Margin Calculator - Profitlator</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <title>How to Calculate Profit Margin (in Dollars) - Profitlator Blog</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="../favicon.png">
 </head>
 <body>
   <header>
-    <!-- Logo and Banner -->
-    <img src="profitlator-logo.png" alt="Profitlator Logo" style="max-width: 160px; margin-bottom: 1rem;" />
+    <img src="../profitlator-logo.png" alt="Profitlator Logo" class="logo">
     <h1 class="logo-title">Profitlator</h1>
-    <p class="tagline"><strong>Your smart profit partner — price better, earn more, grow faster.</strong></p>
-  </header>
+    <p class="tagline"><strong>Your smart profit partner for small businesses and creators worldwide.</strong></p>
+  </header>  <main class="section">
+    <h2>How to Calculate Profit Margin (in Dollars)</h2><p>Understanding your profit margin is essential for every business owner — especially when you’re working with global customers or pricing in US dollars. Here’s how to do it effectively.</p>
 
-  <main>
-    <div class="section">
-      <h2>Profit Margin Calculator</h2>
-      <input type="number" id="costPrice" placeholder="Cost Price">
-      <input type="number" id="sellingPrice" placeholder="Selling Price">
-      <select id="profitCurrency">
-        <option value="$" selected>$</option>
-        <option value="₦">₦</option>
-        <option value="€">€</option>
-        <option value="£">£</option>
-      </select>
-      <button onclick="calculateProfitMargin()">Calculate</button>
-      <div class="result" id="profitResult"></div>
-    </div>
-  </main>
+<h3>🧮 Formula for Profit Margin:</h3>
+<p><strong>Profit Margin (%) = [(Selling Price − Cost Price) / Selling Price] × 100</strong></p>
 
-  <footer>
-    <strong>Powered by Di-Gi</strong>
+<h3>💵 Example in USD:</h3>
+<p>If your cost price is <strong>$30</strong> and you sell for <strong>$50</strong>:</p>
+<ul>
+  <li>Profit = $50 - $30 = $20</li>
+  <li>Profit Margin = ($20 / $50) × 100 = <strong>40%</strong></li>
+</ul>
+
+<h3>✅ Why It Matters:</h3>
+<ul>
+  <li>Helps you set sustainable prices</li>
+  <li>Shows how efficient your business is</li>
+  <li>Makes you more investor-ready and growth-focused</li>
+</ul>
+
+<h3>🚀 Try the Profitlator Tool:</h3>
+<p>Want to calculate it instantly in USD, ₦aira, €uro, or £? Use the <a href="../index.html#profit-margin">Profit Margin Calculator</a> built right into Profitlator.</p>
+
+<p><strong>Powered by Di-Gi.</strong></p>
+
+  </main>  <footer>
+    <p><strong>© 2025 Profitlator — All rights reserved.</strong></p>
   </footer>
-
-  <script>
-    function calculateProfitMargin() {
-      const cost = parseFloat(document.getElementById("costPrice").value);
-      const sell = parseFloat(document.getElementById("sellingPrice").value);
-      const currency = document.getElementById("profitCurrency").value;
-
-      if (isNaN(cost) || isNaN(sell) || cost <= 0) {
-        document.getElementById("profitResult").innerText = "Please enter valid prices.";
-        return;
-      }
-
-      const profit = sell - cost;
-      const margin = (profit / sell) * 100;
-      const markup = (profit / cost) * 100;
-
-      document.getElementById("profitResult").innerHTML =
-        `Profit: <strong>${currency}${profit.toFixed(2)}</strong><br>` +
-        `Margin: <strong>${margin.toFixed(2)}%</strong><br>` +
-        `Markup: <strong>${markup.toFixed(2)}%</strong>`;
-    }
-  </script>
 </body>
 </html>
