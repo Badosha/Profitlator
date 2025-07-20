@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,139 +18,138 @@
 </head>
 <body>
   <header>
+    <!-- Logo and Main Title -->
+    <img src="profitlator-logo.png" alt="Profitlator Logo" style="max-width: 160px; margin-bottom: 1rem;" />
     <h1 class="logo-title">Profitlator</h1>
     <p class="tagline"><strong>Profitlator is your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster.</strong></p>
   </header>
+
   <main>
-    <!-- Live Preview Section -->
-    <div class="section preview-link">
-      <h2>Preview Profitlator</h2>
-      <img src="preview.png" alt="Profitlator Preview Image" class="preview-image">
-      <a href="https://badosha.github.io/Profitlator/" target="_blank" class="preview-button">🚀 Launch Live Preview</a>
-    </div><!-- Basic Calculator -->
-<div class="section">
-  <h2>Basic Calculator</h2>
-  <input type="number" id="num1" placeholder="Enter first number">
-  <select id="operator">
-    <option value="+">+</option>
-    <option value="-">−</option>
-    <option value="*">×</option>
-    <option value="/">÷</option>
-  </select>
-  <input type="number" id="num2" placeholder="Enter second number">
-  <button onclick="calculate()">=</button>
-  <div class="result" id="calcResult"></div>
-</div>
+    <!-- Basic Calculator -->
+    <div class="section">
+      <h2>Basic Calculator</h2>
+      <input type="number" id="num1" placeholder="Enter first number">
+      <select id="operator">
+        <option value="+">+</option>
+        <option value="-">−</option>
+        <option value="*">×</option>
+        <option value="/">÷</option>
+      </select>
+      <input type="number" id="num2" placeholder="Enter second number">
+      <button onclick="calculate()">=</button>
+      <div class="result" id="calcResult"></div>
+    </div>
 
-<!-- Currency Converter -->
-<div class="section">
-  <h2>Currency Converter</h2>
-  <input type="number" id="amount" placeholder="Enter amount">
-  <select id="fromCurrency">
-    <option value="USD">USD</option>
-    <option value="NGN">NGN</option>
-    <option value="EUR">EUR</option>
-    <option value="GBP">GBP</option>
-  </select>
-  <select id="toCurrency">
-    <option value="USD">USD</option>
-    <option value="NGN">NGN</option>
-    <option value="EUR">EUR</option>
-    <option value="GBP">GBP</option>
-  </select>
-  <button onclick="convertCurrency()">Convert</button>
-  <div class="result" id="currencyResult"></div>
-</div>
+    <!-- Currency Converter -->
+    <div class="section">
+      <h2>Currency Converter</h2>
+      <input type="number" id="amount" placeholder="Enter amount">
+      <select id="fromCurrency">
+        <option value="USD">USD</option>
+        <option value="NGN">NGN</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+      </select>
+      <select id="toCurrency">
+        <option value="USD">USD</option>
+        <option value="NGN">NGN</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+      </select>
+      <button onclick="convertCurrency()">Convert</button>
+      <div class="result" id="currencyResult"></div>
+    </div>
 
-<!-- Discount Calculator -->
-<div class="section">
-  <h2>Discount Calculator</h2>
-  <input type="number" id="originalPrice" placeholder="Original Price">
-  <input type="number" id="discountPercent" placeholder="Discount %">
-  <select id="discountCurrency">
-    <option value="$">$</option>
-    <option value="₦">₦</option>
-    <option value="€">€</option>
-    <option value="£">£</option>
-  </select>
-  <button onclick="calculateDiscount()">Calculate Discount</button>
-  <div class="result" id="discountResult"></div>
-</div>
+    <!-- Discount Calculator -->
+    <div class="section">
+      <h2>Discount Calculator</h2>
+      <input type="number" id="originalPrice" placeholder="Original Price">
+      <input type="number" id="discountPercent" placeholder="Discount %">
+      <select id="discountCurrency">
+        <option value="$">$</option>
+        <option value="₦">₦</option>
+        <option value="€">€</option>
+        <option value="£">£</option>
+      </select>
+      <button onclick="calculateDiscount()">Calculate Discount</button>
+      <div class="result" id="discountResult"></div>
+    </div>
 
-<!-- Profit Margin Tool -->
-<div class="section">
-  <h2>Profit Margin Tool</h2>
-  <input type="number" id="costPrice" placeholder="Cost Price">
-  <input type="number" id="sellingPrice" placeholder="Selling Price">
-  <select id="profitCurrency">
-    <option value="$">$</option>
-    <option value="₦">₦</option>
-    <option value="€">€</option>
-    <option value="£">£</option>
-  </select>
-  <button onclick="calculateProfitMargin()">Calculate</button>
-  <div class="result" id="profitResult"></div>
-</div>
+    <!-- Profit Margin Tool -->
+    <div class="section">
+      <h2>Profit Margin Tool</h2>
+      <input type="number" id="costPrice" placeholder="Cost Price">
+      <input type="number" id="sellingPrice" placeholder="Selling Price">
+      <select id="profitCurrency">
+        <option value="$">$</option>
+        <option value="₦">₦</option>
+        <option value="€">€</option>
+        <option value="£">£</option>
+      </select>
+      <button onclick="calculateProfitMargin()">Calculate</button>
+      <div class="result" id="profitResult"></div>
+    </div>
 
-<!-- Unit Price Calculator -->
-<div class="section">
-  <h2>Unit Price Calculator</h2>
-  <input type="number" id="totalCost" placeholder="Total Cost">
-  <input type="number" id="quantity" placeholder="Quantity">
-  <button onclick="calculateUnitPrice()">Calculate</button>
-  <div class="result" id="unitResult"></div>
-</div>
+    <!-- Unit Price Calculator -->
+    <div class="section">
+      <h2>Unit Price Calculator</h2>
+      <input type="number" id="totalCost" placeholder="Total Cost">
+      <input type="number" id="quantity" placeholder="Quantity">
+      <button onclick="calculateUnitPrice()">Calculate</button>
+      <div class="result" id="unitResult"></div>
+    </div>
 
-<!-- Break-even Calculator -->
-<div class="section">
-  <h2>Break-even Calculator</h2>
-  <input type="number" id="fixedCosts" placeholder="Fixed Costs">
-  <input type="number" id="variableCosts" placeholder="Variable Cost per Unit">
-  <input type="number" id="sellingPriceUnit" placeholder="Selling Price per Unit">
-  <button onclick="calculateBreakEven()">Calculate</button>
-  <div class="result" id="breakEvenResult"></div>
-</div>
+    <!-- Break-even Calculator -->
+    <div class="section">
+      <h2>Break-even Calculator</h2>
+      <input type="number" id="fixedCosts" placeholder="Fixed Costs">
+      <input type="number" id="variableCosts" placeholder="Variable Cost per Unit">
+      <input type="number" id="sellingPriceUnit" placeholder="Selling Price per Unit">
+      <button onclick="calculateBreakEven()">Calculate</button>
+      <div class="result" id="breakEvenResult"></div>
+    </div>
 
-<!-- Tax Calculator with Currency Dropdown -->
-<div class="section">
-  <h2>Tax Calculator</h2>
-  <input type="number" id="taxPrice" placeholder="Price">
-  <input type="number" id="taxRate" placeholder="Tax %">
-  <select id="taxMode">
-    <option value="add">Add Tax</option>
-    <option value="remove">Remove Tax</option>
-  </select>
-  <select id="taxCurrency">
-    <option value="$">$</option>
-    <option value="₦">₦</option>
-    <option value="€">€</option>
-    <option value="£">£</option>
-  </select>
-  <button onclick="calculateTax()">Calculate</button>
-  <div class="result" id="taxResult"></div>
-</div>
+    <!-- Tax Calculator -->
+    <div class="section">
+      <h2>Tax Calculator</h2>
+      <input type="number" id="taxPrice" placeholder="Price">
+      <input type="number" id="taxRate" placeholder="Tax %">
+      <select id="taxMode">
+        <option value="add">Add Tax</option>
+        <option value="remove">Remove Tax</option>
+      </select>
+      <select id="taxCurrency">
+        <option value="$">$</option>
+        <option value="₦">₦</option>
+        <option value="€">€</option>
+        <option value="£">£</option>
+      </select>
+      <button onclick="calculateTax()">Calculate</button>
+      <div class="result" id="taxResult"></div>
+    </div>
 
-<!-- About Section -->
-<div class="section" id="about">
-  <h2>About Profitlator</h2>
-  <p><strong>Who this is for:</strong> Small businesses, online sellers, digital entrepreneurs, freelancers, and anyone who wants to better understand their earnings.</p>
-  <p><strong>What it solves:</strong> Complex pricing, confusing currency conversions, profit planning and discount calculation — all in one tool.</p>
-  <p><strong>Why use it:</strong> It’s fast, simple, global, free, and designed to help you earn smarter.</p>
-</div>
+    <!-- About Section -->
+    <div class="section" id="about">
+      <h2>About Profitlator</h2>
+      <p><strong>Who this is for:</strong> Small businesses, online sellers, digital entrepreneurs, freelancers, and anyone who wants to better understand their earnings.</p>
+      <p><strong>What it solves:</strong> Complex pricing, confusing currency conversions, profit planning and discount calculation — all in one tool.</p>
+      <p><strong>Why use it:</strong> It’s fast, simple, global, free, and designed to help you earn smarter.</p>
+    </div>
 
-<!-- Share Buttons -->
-<div class="share">
-  <p><strong>Share Profitlator:</strong></p>
-  <button onclick="share('whatsapp')">WhatsApp</button>
-  <button onclick="share('facebook')">Facebook</button>
-  <button onclick="share('twitter')">Twitter</button>
-  <button onclick="share('linkedin')">LinkedIn</button>
-</div>
-
+    <!-- Share Buttons -->
+    <div class="share">
+      <p><strong>Share Profitlator:</strong></p>
+      <button onclick="share('whatsapp')">WhatsApp</button>
+      <button onclick="share('facebook')">Facebook</button>
+      <button onclick="share('twitter')">Twitter</button>
+      <button onclick="share('linkedin')">LinkedIn</button>
+    </div>
   </main>
+
   <footer>
     <strong>Powered by Di-Gi</strong>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
