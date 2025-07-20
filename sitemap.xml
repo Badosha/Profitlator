@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
   <url>
     <loc>https://badosha.github.io/Profitlator/</loc>
     <lastmod>2025-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Profit Margin Blog Page -->
   <url>
     <loc>https://badosha.github.io/Profitlator/blog/profit-margin.html</loc>
     <lastmod>2025-07-20</lastmod>
