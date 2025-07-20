@@ -14,11 +14,28 @@
   <title>Profitlator</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    .preview-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #28a745;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+    }
+    .preview-link:hover {
+      background: #218838;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>Profitlator</h1>
     <p class="tagline"><strong>Profitlator is your smart profit partner — helping everyday people and small businesses price better, earn more, and grow faster.</strong></p>
+    <a href="preview.html" class="preview-link">🔍 View Preview Page</a>
   </header>
   <main>
     <!-- Basic Calculator -->
@@ -144,5 +161,26 @@
     <strong>Powered by Di-Gi</strong>
   </footer>
   <script src="script.js"></script>
+  <script>
+    function calculateTax() {
+      const price = parseFloat(document.getElementById("taxPrice").value);
+      const taxRate = parseFloat(document.getElementById("taxRate").value);
+      const taxMode = document.getElementById("taxMode").value;
+      const taxCurrency = document.getElementById("taxCurrency").value;if (isNaN(price) || isNaN(taxRate)) {
+    document.getElementById("taxResult").innerText = "Please enter valid values.";
+    return;
+  }
+
+  let result;
+  if (taxMode === "add") {
+    result = price + (price * taxRate / 100);
+  } else {
+    result = price / (1 + taxRate / 100);
+  }
+
+  document.getElementById("taxResult").innerText = `${taxCurrency}${result.toFixed(2)}`;
+}
+
+  </script>
 </body>
 </html>
