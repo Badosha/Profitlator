@@ -140,3 +140,18 @@ footer {
     padding: 0.5rem 1.2rem;
   }
 }
+
+/* Blog Link */
+.blog-link {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #1f4ba5;
+  text-decoration: none;
+  margin-top: 0.8rem;
+}
+
+.blog-link:hover {
+  text-decoration: underline;
+  color: #15306d;
+}
